@@ -1,0 +1,25 @@
+<%- include("partials/header.ejs") %>
+<% const allPost = [] %>
+<% Object.keys(reframe).forEach(category => { %>
+    <% reframe[category].forEach(post => { %>
+        <% allPost.push({ ...post }) %>
+    <% }) %>
+<% }) %>
+
+<% allPost.sort((a, b)=> new Date(b.date) - new Date(a.date))%>
+
+<% allPost.forEach(post => { %>
+    <div class="structure">
+        <div class="headings"> <%=post.heading%></div>
+        <div class="imgContainer"> <img src="data:<%= post.mime%>; base64, <%= post.image %>" alt="uploaded image for <%=post.category%>" class="image"></div>
+        <div class="contents"> <%=post.content%></div>
+    </div>
+<%}) %>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const homePage = document.querySelector(".homePageButton");
+        homePage.style.display = "block";
+    })
+</script>
+<%- include("partials/footer.ejs") %>

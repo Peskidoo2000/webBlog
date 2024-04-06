@@ -1,0 +1,12 @@
+body, html{
+    box-sizing: border-box;
+    margin: 0px;
+    padding:0px;
+    font-family:'sofia', 'trigon', 'Audiowide', 'Courier New', Courier, monospace;
+    background-color: #333;
+    color:white;
+    overflow-x: hidden;
+}
+.submitParent{
+    text-align: center;
+}

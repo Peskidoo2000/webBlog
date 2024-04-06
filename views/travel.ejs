@@ -1,0 +1,60 @@
+<%- include("partials/header.ejs") %>
+
+<% const allPosts = []; %>
+<% Object.keys(categories).forEach(category => { %>
+    <% categories[category].forEach(post => {%>
+        <% allPosts.push({...post}); %>
+    <%});%>
+ <%}); %>
+
+
+<% if(allPosts.length === 0){ %>
+    <div> <h1 class="noPostSignal"> THERE IS NO YET POST IN THIS CATEGORY </h1> </div>
+<% }else{ %>
+ <% allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)); %>
+
+ <div class="post-grid">
+ <% allPosts.forEach((post, index) => {%>
+    <div class="postPreview" data-divIndex = "<%= index + 1 %>">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-primary-emphasis"><%= post.category %></strong>
+              <h3 class="mb-0"><%= post.heading %></h3>
+              <div class="mb-1 text-body-secondary"><%= post.date %></div>
+              <p class="mb-auto"> <%= post.postInformant %> </p>
+              <a  href="/displayContinue?id=<%= index + 1%>" class="icon-link gap-1 icon-link-hover stretched-link"> Continue reading </a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+              <img src="data:<%= post.mime%>; base64, <%= post.image %>" alt="uploaded image for <%=post.category%>"
+                class="bd-placeholder-img" width="200" height="250" 
+                aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">         
+            </div>  
+          </div>
+        </div>
+    
+<%})%>
+ </div>
+
+<% } %>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function (){
+        const postDiv = document.querySelectorAll('.postPreview');
+        
+        postDiv.forEach(post =>{
+            const divIndex = post.getAttribute('data-divIndex');
+
+            if(divIndex > 0){
+                post.style.display = "block";
+            }else{
+                post.style.display = "none";
+            }
+        })
+        const homePage = document.querySelector(".homePageButton");
+        homePage.style.display = "block";
+    })
+</script>
+
+<%- include("partials/footer.ejs") %>
